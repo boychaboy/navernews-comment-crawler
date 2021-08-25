@@ -43,50 +43,48 @@ class NavernewsScraper:
         """Crawl all available article urls"""
         article_urls = []
         start_time = time()
-        domains = {
-            "sexual_orientation": ["차별금지법", "동성혼", "퀴어", "퀴어 활동가", "성소수자"],
-        }
+        keyword = input("Keyword: ")
         #  domains = {
-        #      "gender": ["백래시", "페미니즘", "여성혐오", "여성단체"],
-        #      "xenophobia": ["이민자", "난민", "중국동포", "외국인 근로자"],
-        #  "sexual_orientation": ["차별금지법", "동성혼", "퀴어", "퀴어 활동가", "성소수자"],
+        #       "gender": ["백래시", "페미니즘", "여성혐오", "여성단체"],
+        #       "xenophobia": ["이민자", "난민", "중국동포", "외국인 근로자"],
+        #       "sexual_orientation": ["차별금지법", "동성혼", "퀴어", "퀴어 활동가", "성소수자"],
         #  }
-        for key in domains.keys():
-            print(f"Domain : {key}")
-            queries = domains[key]
-            for query in queries:
-                num_articles = 0
-                print(f"Scraping with keyword {query}...")
-                # use mobile link
-                NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={query}&sort=0&nso=so:r,p:1y"
-                self.driver.get(NEWS_URL)
-                self.driver.implicitly_wait(1)
-                page = 1
-                while True:
-                    article_urls_per_page = self._get_article_urls_per_page()
-                    article_urls.extend(article_urls_per_page)
-                    num_articles += len(article_urls_per_page)
+        #  for key in domains.keys():
+        #      print(f"Domain : {key}")
+        #      queries = domains[key]
+        #      for query in queries:
+        num_articles = 0
+        print(f"Scraping with keyword {keyword}...")
+        # use mobile link
+        NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={query}&sort=0&nso=so:r,p:1y"
+        self.driver.get(NEWS_URL)
+        self.driver.implicitly_wait(1)
+        page = 1
+        while True:
+            article_urls_per_page = self._get_article_urls_per_page()
+            article_urls.extend(article_urls_per_page)
+            num_articles += len(article_urls_per_page)
 
-                    try:
-                        last_page = self.driver.find_element_by_class_name(
-                            "btn_next"
-                        ).get_attribute("aria-disabled")
-                        if last_page != "true":
-                            # go to next page
-                            self.driver.find_element_by_xpath(
-                                '//*[@id="ct"]/div[3]/div/div/button[2]/i'
-                            ).click()
-                            self.driver.implicitly_wait(3)
-                            page += 1
-                        else:
-                            # break when last page
-                            print("Done!")
-                            break
-                    except:
-                        # break when no next page
-                        print("Done!")
-                        break
-                print(f"Total : {num_articles} \t time elapsed: {time() - start_time}")
+            try:
+                last_page = self.driver.find_element_by_class_name(
+                    "btn_next"
+                ).get_attribute("aria-disabled")
+                if last_page != "true":
+                    # go to next page
+                    self.driver.find_element_by_xpath(
+                        '//*[@id="ct"]/div[3]/div/div/button[2]/i'
+                    ).click()
+                    self.driver.implicitly_wait(3)
+                    page += 1
+                else:
+                    # break when last page
+                    print("Done!")
+                    break
+            except:
+                # break when no next page
+                print("Done!")
+                break
+        print(f"Total : {num_articles} \t time elapsed: {time() - start_time}")
         print(f"Total Articles : {len(article_urls)}")
         return article_urls
 
