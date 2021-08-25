@@ -1,3 +1,5 @@
+[한국어](./README.md) | [English](./README_EN.md)
+
 # Naver News Comment Crawler
 
 Project name is a `Naver News Comment Crawler` that allows `Anyone` to crawl `comments and titles from naver news portal`.
