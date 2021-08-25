@@ -1,10 +1,5 @@
 # Naver News Comment Crawler
 
-<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
-![GitHub repo size](https://img.shields.io/github/repo-size/boychaboy/navernews-comment-crawler)
-![GitHub contributors](https://img.shields.io/github/contributors/boychaboy/navernews-comment-crawler)
-![GitHub stars](https://img.shields.io/github/stars/navernews-comment-crawler?style=social)
-
 Project name is a `Naver News Comment Crawler` that allows `Anyone` to crawl `comments and titles from naver news portal`.
 
 Used `scrapy` to boost up the speed and convenience.
