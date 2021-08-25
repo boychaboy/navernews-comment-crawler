@@ -56,7 +56,7 @@ class NavernewsScraper:
         num_articles = 0
         print(f"Scraping with keyword {keyword}...")
         # use mobile link
-        NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={query}&sort=0&nso=so:r,p:1y"
+        NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={keyword}&sort=0&nso=so:r,p:1y"
         self.driver.get(NEWS_URL)
         self.driver.implicitly_wait(1)
         page = 1

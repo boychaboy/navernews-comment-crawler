@@ -2,31 +2,25 @@
 
 # Naver News Comment Crawler
 
-Project name is a `Naver News Comment Crawler` that allows `Anyone` to crawl `comments and titles from naver news portal`.
+본 크롤러는 네이버의 뉴스 기사, 날짜, 댓글(답글 포함)을 수집하는 크롤러입니다. 
+`scrapy` 를 사용하여 작성하였습니다. 
 
-Used `scrapy` to boost up the speed and convenience.
-
-## Installing
+## 설치
 
 To install, follow these steps:
 
 ```
-1. You have Chrome, right?
-2. [Download](https://chromedriver.chromium.org/downloads) and add the correct version of `chromedriver` (you can check the version of yours in `preferences -> About Chrome`).
-3. Install packages using `pip` / `conda` : you need `scrapy` and `selenium`
-4. You're all set!
+1. 구글 크롬을 설치합니다. 
+2. 맞는 버전의 `chromedriver`를 [다운로드](https://chromedriver.chromium.org/downloads)한 다음 `./navernews-comment-crawler` 바로 아래로 이동합니다. 
+3. `scrapy`, `selenium` 패키지를 설치합니다. 
 ```
 
-## Using crawler
-
-To use crawler, follow these steps:
+## 크롤링
 
 ```
 1. `scrapy crawl navernews -o {output_filename}
-2. Write keyword to search news
-3. Done!
+2. 뉴스를 검색할 "키워드"를 입력합니다. 
 ```
-The crawler now scrapes the title, date, and comments(including comments in comment)!
 
 ## Contact
 
