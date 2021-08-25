@@ -7,8 +7,6 @@
 
 ## 설치
 
-To install, follow these steps:
-
 ```
 1. 구글 크롬을 설치합니다. 
 2. 맞는 버전의 `chromedriver`를 [다운로드](https://chromedriver.chromium.org/downloads)한 다음 `./navernews-comment-crawler` 바로 아래로 이동합니다. 
