@@ -15,7 +15,7 @@ To install, follow these steps:
 4. You're all set!
 ```
 
-## Using <project_name>
+## Using crawler
 
 To use crawler, follow these steps:
 
@@ -26,7 +26,7 @@ To use crawler, follow these steps:
 ```
 The crawler now scrapes the title, date, and comments(including comments in comment)!
 
-## Contributing to <project_name>
+## Contributing
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
 To contribute, follow these steps:
 
