@@ -1,13 +1,12 @@
-import scrapy
 from pathlib import Path
 from time import time
 from typing import List
 
+import scrapy
 from lxml import html
+from navernews_comment.data import Corpus
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
-from navernews_comment.data import Corpus
 
 
 class NavernewsScraper:
@@ -44,6 +43,7 @@ class NavernewsScraper:
         article_urls = []
         start_time = time()
         keyword = input("Keyword: ")
+        # 210825 first keywords
         #  domains = {
         #       "gender": ["백래시", "페미니즘", "여성혐오", "여성단체"],
         #       "xenophobia": ["이민자", "난민", "중국동포", "외국인 근로자"],
@@ -53,39 +53,45 @@ class NavernewsScraper:
         #      print(f"Domain : {key}")
         #      queries = domains[key]
         #      for query in queries:
-        num_articles = 0
-        print(f"Scraping with keyword {keyword}...")
-        # use mobile link
-        NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={keyword}&sort=0&nso=so:r,p:1y"
-        self.driver.get(NEWS_URL)
-        self.driver.implicitly_wait(1)
-        page = 1
-        while True:
-            article_urls_per_page = self._get_article_urls_per_page()
-            article_urls.extend(article_urls_per_page)
-            num_articles += len(article_urls_per_page)
+        # 210927 beep-title-keyword
+        keywords = ["성추행", "해명", "반응", "공식입장", "노출", "컴백", "부인", "시청률", "단톡방"]
+        max_articles_per_keyword = 100
+        for keyword in keywords:
+            num_articles = 0
+            print(f"Scraping with keyword {keyword}...")
+            # use mobile link
+            NEWS_URL = f"https://m.search.naver.com/search.naver?where=m_news&sm=mtb_nmr&query={keyword}&sort=0&nso=so:r,p:1y"
+            self.driver.get(NEWS_URL)
+            self.driver.implicitly_wait(1)
+            page = 1
+            while True:
+                article_urls_per_page = self._get_article_urls_per_page()
+                article_urls.extend(article_urls_per_page)
+                num_articles += len(article_urls_per_page)
 
-            try:
-                last_page = self.driver.find_element_by_class_name(
-                    "btn_next"
-                ).get_attribute("aria-disabled")
-                if last_page != "true":
-                    # go to next page
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="ct"]/div[3]/div/div/button[2]/i'
-                    ).click()
-                    self.driver.implicitly_wait(3)
-                    page += 1
-                else:
-                    # break when last page
+                try:
+                    last_page = self.driver.find_element_by_class_name(
+                        "btn_next"
+                    ).get_attribute("aria-disabled")
+                    if last_page != "true":
+                        # go to next page
+                        self.driver.find_element_by_xpath(
+                            '//*[@id="ct"]/div[3]/div/div/button[2]/i'
+                        ).click()
+                        self.driver.implicitly_wait(3)
+                        page += 1
+                    else:
+                        # break when last page
+                        print("Done!")
+                        break
+                except:
+                    # break when no next page
                     print("Done!")
                     break
-            except:
-                # break when no next page
-                print("Done!")
-                break
-        print(f"Total : {num_articles} \t time elapsed: {time() - start_time}")
-        print(f"Total Articles : {len(article_urls)}")
+                if num_articles > max_articles_per_keyword:
+                    break
+            print(f"Total : {num_articles} \t time elapsed: {time() - start_time}")
+            print(f"Total Articles : {len(article_urls)}")
         return article_urls
 
 
@@ -139,9 +145,6 @@ class NavernewsSpider(scrapy.Spider):
                     )
                     btn_more.click()
                     self.driver.implicitly_wait(1)
-                    #  if cnt > 3:
-                    #      break
-                    #  cnt += 1
                 except:
                     break
             dabgul_btns = self.driver.find_elements_by_xpath(
